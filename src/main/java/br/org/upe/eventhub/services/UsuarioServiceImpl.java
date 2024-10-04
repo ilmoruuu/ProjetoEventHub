@@ -1,6 +1,7 @@
 package br.org.upe.eventhub.services;
 
 import br.org.upe.eventhub.entities.Usuario;
+import br.org.upe.eventhub.exceptions.UsuarioExistenteException;
 import br.org.upe.eventhub.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Optional<Usuario> usuarioBanco = usuarioRepository.findByEmail(usuario.getEmail());
 
         if (usuarioBanco.isPresent()) {
-            return null;
+            throw new UsuarioExistenteException();
         }
 
         Optional<Usuario> usuarioBanco2 = usuarioRepository.findByCpf(usuario.getCpf());
